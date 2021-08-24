@@ -38,7 +38,7 @@ def IngredientList(request):
 
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([BasicAuthentication, SessionAuthentication, ])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def IngredientDetail(request, Ing_id):
@@ -46,7 +46,7 @@ def IngredientDetail(request, Ing_id):
         ingredient_id = Ingredient.objects.get(id=Ing_id)
     except Ingredient.DoesNotExist:
         return response({"message": "Ingredient does not exist"})
-    if response. method == 'GET':
+    if request.method == 'GET':
         serializer= IngredientSerializer(ingredient_id)
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == "PUT":
@@ -63,7 +63,7 @@ def IngredientDetail(request, Ing_id):
      #####RECIPE VIEW TO PERFORM CRUD FOR ONE OR ALL DATA#####
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 @authentication_classes([BasicAuthentication, SessionAuthentication, ])
 @permission_classes([IsAuthenticated])
 def RecipeList(request):
@@ -88,7 +88,7 @@ def RecipeList(request):
 
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([BasicAuthentication, SessionAuthentication, ])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def RecipeDetail(request, Rec_id):
@@ -96,7 +96,7 @@ def RecipeDetail(request, Rec_id):
         recipe_id = Recipe.objects.get(id=Rec_id)
     except Recipe.DoesNotExist:
         return response({"message": "Ingredient does not exist"})
-    if response. method == 'GET':
+    if request.method == 'GET':
         serializer= RecipeSerializer(recipe_id)
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == "PUT":
